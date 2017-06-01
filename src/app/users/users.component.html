@@ -1,0 +1,85 @@
+<clr-main-container>
+  <clr-header class="header-4">
+    <div class="branding">
+      <a class="nav-link">
+        <clr-icon shape="bank"></clr-icon>
+        <span class="title">Smart Claim</span>
+      </a>
+    </div>
+
+    <div class="header-actions">
+      <clr-dropdown class="dropdown bottom-right">
+        <button class="nav-text" clrDropdownToggle>
+          {{fullname}}
+          <clr-icon shape="caret down"></clr-icon>
+      </button>
+        <div class="dropdown-menu">
+          <!--<a clrDropdownItem routerLink="/users/profile">ข้อมูลส่วนตัว</a>-->
+          <a clrDropdownItem routerLink="/users/changepass">เปลี่ยนรหัสผ่าน</a>
+          <a clrDropdownItem (click)="logout()">ออกจากระบบ</a>
+        </div>
+      </clr-dropdown>
+    </div>
+  </clr-header>
+  <nav class="subnav">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/users/dashboard" routerLink='/users/main' routerLinkActive='active'>Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/users/import" routerLink='/users/import' routerLinkActive='active'>นำเข้าข้อมูล</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="content-container">
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+    <nav class="sidenav" [clr-nav-level]="1">
+      <section class="sidenav-content">
+        <clr-tree-node [clrTreeNodeExpanded]="true">
+          เมนูหลัก
+          <clr-tree-node>
+            <button class="clr-treenode-link" routerLink='/users/dashboard' routerLinkActive='active'>
+              <clr-icon shape="dashboard"></clr-icon>
+              Dashboard
+            </button>
+          </clr-tree-node>
+          <clr-tree-node>
+            <button class="clr-treenode-link" routerLink='/users/opd' routerLinkActive='active'>
+              <clr-icon shape="users"></clr-icon>
+              กองทุนผู้ป่วยนอก
+            </button>
+          </clr-tree-node>
+          <clr-tree-node>
+            <button class="clr-treenode-link" routerLink='/users/ipd' routerLinkActive='active'>
+              <clr-icon shape="clipboard"></clr-icon>
+              กองทุนผู้ป่วยใน
+            </button>
+          </clr-tree-node>
+          <clr-tree-node>
+            <button class="clr-treenode-link" routerLink='/users/send-status' routerLinkActive='active'>
+              <clr-icon shape="switch"></clr-icon>
+              รายการค้างส่ง
+            </button>
+          </clr-tree-node>
+        </clr-tree-node>
+        <clr-tree-node [clrTreeNodeExpanded]="true">
+          เครื่องมือ (Tools)
+          <clr-tree-node>
+            <button class="clr-treenode-link" routerLink='/users/changepass' routerLinkActive='active'>
+                <clr-icon shape="key"></clr-icon>
+                เปลี่ยนรหัสผ่าน
+            </button>
+          </clr-tree-node>
+          <clr-tree-node>
+            <button class="clr-treenode-link" routerLink='/users/import' routerLinkActive='active'>
+              <clr-icon shape="import"></clr-icon>
+              นำเข้าข้อมูล
+            </button>
+          </clr-tree-node>
+        </clr-tree-node>
+      </section>
+    </nav>
+  </div>
+</clr-main-container>

@@ -1,0 +1,115 @@
+<h4>รายการค้างส่ง</h4>
+<clr-tabs>
+  <clr-tab-link [clrTabLinkId]="'ucs'" [clrTabLinkActive]="true">สิทธิหลักประกันสุขภาพถ้วนหน้า (UCS,WEL)</clr-tab-link>
+  <clr-tab-link [clrTabLinkId]="'ofc'">สิทธิข้าราชการ (OFC) และ องค์กรปกครองส่วนท้องถิ่น (LGO)</clr-tab-link>
+  <clr-tab-link [clrTabLinkId]="'sss'">สิทธิประกันสังคม (SSS)</clr-tab-link>
+
+  <clr-tab-content [clrTabContentId]="'content1'" [clrTabContentActive]="true">
+    <div class="row">
+      <div class="col-md-3" [style.padding-top.px]="6">
+        <my-date-picker-th name="mydate" [options]="myDatePickerOptions" [(ngModel)]="ipdStartDate" required>
+        </my-date-picker-th>
+      </div>
+      <div class="col-md-3" [style.padding-top.px]="6">
+        <my-date-picker-th name="mydate" [options]="myDatePickerOptions" [(ngModel)]="ipdEndDate" required>
+        </my-date-picker-th>
+      </div>
+      <div class="col-md-5" style="float: right; padding-top: 15px;">
+            <div class="select">
+                <select id="selects_1">
+                    <option><ทุกประเภท></option>
+                    <option>ผู้ป่วยใน (IP)</option>
+                    <option>ผู้ป่วยนอก (OP)</option>
+                </select>
+            </div>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-success" (click)="showNotSendIPDList()" [disabled]="!ipdStartDate || !ipdEndDate || loading">
+          แสดง
+        </button>
+      </div>
+    </div>
+
+    <clr-datagrid [clrDgLoading]="loading">
+      <clr-dg-column [clrDgField]="'dchdate'" [style.width.%]="20">วันที่จำหน่าย</clr-dg-column>
+      <clr-dg-column [clrDgField]="'an'" [style.width.%]="10">AN</clr-dg-column>
+      <clr-dg-column [clrDgField]="'hn'" [style.width.%]="10">HN</clr-dg-column>
+      <clr-dg-column [clrDgField]="'ptname'" [style.width.%]="30">ชื่อ-สกุล</clr-dg-column>
+      <clr-dg-column [style.width.%]="10">สิทธิ์</clr-dg-column>
+      <clr-dg-column [clrDgField]="'total_price'" [style.width.%]="10">ค่าใช้จ่าย</clr-dg-column>
+      <clr-dg-column [clrDgField]="'total_late'" [style.width.%]="10">ล่าช้า (วัน)</clr-dg-column>
+      <clr-dg-placeholder>ไม่พบรายการ, กรุณาระบุเงื่อนไข!</clr-dg-placeholder>
+      <clr-dg-row *clrDgItems="let s of notSendLists">
+        <clr-dg-cell>{{s.dchdate }} {{s.dchtime}}</clr-dg-cell>
+        <clr-dg-cell>{{s.an}}</clr-dg-cell>
+        <clr-dg-cell>{{s.hn}}</clr-dg-cell>
+        <clr-dg-cell>{{s.ptname }}</clr-dg-cell>
+        <clr-dg-cell>{{s.inscl }}</clr-dg-cell>
+        <clr-dg-cell>{{s.total_price | number: '1.2' }}</clr-dg-cell>
+        <clr-dg-cell>
+          <span class="label label-danger" *ngIf="s.total_late > 15">{{s.total_late | number }}</span>
+          <span class="label label-warning" *ngIf="s.total_late == 15">{{s.total_late | number }}</span>
+          <span class="label label-success" *ngIf="s.total_late < 15">{{s.total_late | number }}</span>
+        </clr-dg-cell>
+      </clr-dg-row>
+
+      <clr-dg-footer>
+           ทั้งหมด <span class="label label-danger">{{ notSendLists.length | number}}</span> รายการ, 
+           ค่าใช้จ่ายรวม <span class="label label-success">{{ totalPriceLateIpd | number: '1.2' }}</span> บาท
+           &nbsp;&nbsp;&nbsp;
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} รายการ
+        <clr-dg-pagination #pagination [clrDgPageSize]="10"></clr-dg-pagination>
+      </clr-dg-footer>
+    </clr-datagrid>
+
+  </clr-tab-content>
+  <clr-tab-content>
+    <div class="row">
+      <div class="col-md-3" [style.padding-top.px]="6">
+        <my-date-picker-th name="mydate" [options]="myDatePickerOptions" [(ngModel)]="opdStartDate" required>
+        </my-date-picker-th>
+      </div>
+      <div class="col-md-3" [style.padding-top.px]="6">
+        <my-date-picker-th name="mydate" [options]="myDatePickerOptions" [(ngModel)]="opdEndDate" required>
+        </my-date-picker-th>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-success" (click)="showNotSendOPDList()" [disabled]="!opdStartDate || !opdEndDate">
+          แสดง
+        </button>
+      </div>
+      <div class="col-md-5">
+        <div style="float: right; padding-top: 10px;" *ngIf="notSendLists.length">
+          ทั้งหมด <span class="label label-danger">{{ notSendLists.length | number}}</span> รายการ, ค่าใช้จ่ายรวม <span class="label label-success">{{ totalPriceLate | number: '1.0-2' }}</span>          บาท
+        </div>
+      </div>
+    </div>
+
+    <clr-datagrid [clrDgLoading]="loading">
+      <clr-dg-column [style.width.%]="20">วันที่</clr-dg-column>
+      <clr-dg-column [style.width.%]="10">HN</clr-dg-column>
+      <clr-dg-column [style.width.%]="30">ชื่อ-สกุล</clr-dg-column>
+      <clr-dg-column [style.width.%]="10">สิทธิ์</clr-dg-column>
+      <clr-dg-column [style.width.%]="10">ค่าใช้จ่าย</clr-dg-column>
+      <clr-dg-column [style.width.%]="10">จำนวนวันล่าช้า</clr-dg-column>
+      <clr-dg-placeholder>ไม่พบรายการ, กรุณาระบุเงื่อนไข!</clr-dg-placeholder>
+      <clr-dg-row *clrDgItems="let s of notSendListsOpd">
+        <clr-dg-cell>{{s.dchdate }} {{s.dchtime}}</clr-dg-cell>
+        <clr-dg-cell>{{s.hn}}</clr-dg-cell>
+        <clr-dg-cell>{{s.ptname }}</clr-dg-cell>
+        <clr-dg-cell>{{s.inscl }}</clr-dg-cell>
+        <clr-dg-cell>{{s.total_price | number: '1.0-2' }}</clr-dg-cell>
+        <clr-dg-cell>
+          <span class="label label-danger" *ngIf="s.total_late > 15">{{s.total_late | number }}</span>
+          <span class="label label-warning" *ngIf="+s.total_late === 15">{{s.total_late | number }}</span>
+          <span class="label label-success" *ngIf="+s.total_late < 15">{{s.total_late | number }}</span>
+        </clr-dg-cell>
+      </clr-dg-row>
+
+      <clr-dg-footer>
+        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} รายการ
+        <clr-dg-pagination #pagination [clrDgPageSize]="10"></clr-dg-pagination>
+      </clr-dg-footer>
+    </clr-datagrid>
+  </clr-tab-content>
+</clr-tabs>

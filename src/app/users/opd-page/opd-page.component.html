@@ -1,0 +1,27 @@
+<clr-datagrid>
+    <clr-dg-column>วันที่</clr-dg-column>
+    <clr-dg-column>เวลา</clr-dg-column>
+    <clr-dg-column>HN</clr-dg-column>
+    <clr-dg-column>เลขบัตรประชาชน</clr-dg-column>
+    <clr-dg-column>ชื่อ - สกุล</clr-dg-column>
+    <clr-dg-column>สิทธิ์การรักษา</clr-dg-column>
+    <clr-dg-column>ค่าใช้จ่าย</clr-dg-column>
+
+<clr-dg-placeholder>ไม่พบข้อมูล</clr-dg-placeholder>
+
+    <clr-dg-row *ngFor="let p of patients">
+        <clr-dg-cell>{{p.serv_date}}</clr-dg-cell>
+        <clr-dg-cell>{{p.serv_time}}</clr-dg-cell>
+        <clr-dg-cell>{{p.hn}}</clr-dg-cell>
+        <clr-dg-cell>{{p.cid}}</clr-dg-cell>
+        <clr-dg-cell>{{p.fullname}}</clr-dg-cell>
+        <clr-dg-cell>{{p.ins_name}}</clr-dg-cell>
+        <clr-dg-cell>{{p.price}}</clr-dg-cell>
+    </clr-dg-row>
+
+ <clr-dg-footer>
+    {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+    of {{pagination.totalItems}} รายการ
+    <clr-dg-pagination #pagination [clrDgPageSize]="10"></clr-dg-pagination>
+</clr-dg-footer>
+</clr-datagrid>

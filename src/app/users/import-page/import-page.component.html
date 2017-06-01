@@ -1,0 +1,91 @@
+<h4>ประวัตินำเข้าข้อมูล</h4>
+<button type="button" (click)="showUploader()" class="btn btn-sm btn-primary-outline">
+  <clr-icon shape="upload-cloud" size="16"></clr-icon>
+  นำเข้าข้อมูล
+</button>
+<clr-datagrid [clrLoading]="loading">
+  <clr-dg-column>วันที่</clr-dg-column>
+  <clr-dg-column>ชื่อไฟล์</clr-dg-column>
+  <clr-dg-column>ประเภท</clr-dg-column>
+  <clr-dg-column>นำเข้าโดย</clr-dg-column>
+  <clr-dg-placeholder>ไม่พบไฟล์ที่ต้องการนำเข้า</clr-dg-placeholder>
+
+  <clr-dg-row *ngFor="let log of logs">
+    <clr-dg-cell>{{log.uploaded_at | date}}</clr-dg-cell>
+    <clr-dg-cell>{{log.filename}}</clr-dg-cell>
+    <clr-dg-cell>{{log.filetype}}</clr-dg-cell>
+    <clr-dg-cell>{{log.username}}</clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>
+    {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} รายการ
+    <clr-dg-pagination #pagination [clrDgPageSize]="10"></clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>
+
+<clr-modal [(clrModalOpen)]="openImport" [clrModalClosable]="false" [clrModalSize]="'lg'">
+  <h3 class="modal-title">อัปโหลดไฟล์เพื่อนำเข้าข้อมูล</h3>
+  <div class="modal-body">
+    <form>
+      <section class="form-block">
+        <div class="form-group" style="padding-left: 100px;">
+          <label for="aForm_1">ประเภทไฟล์</label>
+          <div class="select">
+            <select [(ngModel)]="fileType" name="slFileType">
+              <option value="1">16 แฟ้ม (.zip)</option>
+              <option value="2">REP สิทธิหลักประกันสุขภาพถ้วนหน้า (UCS,WEL)</option>
+              <option value="3">REP สิทธิข้าราชการ (OFC) และ องค์กรปกครองส่วนท้องถิ่น (LGO)</option>
+              <option value="4">REP สิทธิประกันสังคม (SSS)</option>
+              <!--<option value="6">Invoice สิทธิหลักประกันสุขภาพถ้วนหน้า (UCS,WEL)</option>
+              <option value="7">Invoice สิทธิข้าราชการ (OFC)</option>
+              <option value="8">Invoice สิทธิประกันสังคม (SSS)</option>
+              <option value="9">Invoice องค์กรปกครองส่วนท้องถิ่น (LGO)</option>-->
+            </select>
+          </div>
+        </div>
+      </section>
+    </form>
+
+    <label class="btn btn-sm btn-success" style="margin: 0px;">
+          <input type="file" #file
+              accept=".xlsx,.xls,.zip"
+              class="hidden"
+              multiple
+              (change)="fileChangeEvent($event)">
+          + เพิ่มไฟล์...
+        </label>
+    <small>เลือกหลายไฟล์ ให้กด Ctrl หรือ Shift ค้างไว้แล้วเลือกไฟล์ที่ต้องการ</small>
+    <clr-datagrid>
+      <clr-dg-column [style.width.%]="50">ชื่อไฟล์</clr-dg-column>
+      <clr-dg-column [style.width.%]="15">ขนาด (Byte)</clr-dg-column>
+      <clr-dg-column [style.width.%]="10">#</clr-dg-column>
+
+      <clr-dg-row *ngFor="let file of filesUploads; let idx = index;">
+        <clr-dg-cell>{{file.name}}</clr-dg-cell>
+        <clr-dg-cell>{{file.size}}</clr-dg-cell>
+        <clr-dg-cell>
+          <a href="javascript://" (click)="removeFile(file.name)" class="label label-warning clickable">
+                  ลบ
+              </a>
+        </clr-dg-cell>
+      </clr-dg-row>
+
+      <clr-dg-footer>{{filesUploads.length}} file(s)</clr-dg-footer>
+    </clr-datagrid>
+
+  </div>
+  <div class="modal-footer">
+    <span class="spinner spinner-inline" *ngIf="isUploading">
+        กำลังนำเข้าข้อมูล...
+    </span>
+    <span *ngIf="isUploading">
+        กำลังนำเข้าข้อมูล...
+    </span>
+    <button type="button" class="btn btn-outline-danger" (click)="openImport = false">
+      ยกเลิก/ปิดหน้าต่าง
+    </button>
+    <button type="button" class="btn btn-primary" [disabled]="!fileName || isUploading" (click)="doUpload()">
+      อัปโหลดไฟล์
+    </button>
+  </div>
+</clr-modal>

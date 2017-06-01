@@ -1,0 +1,1 @@
+# Smart Claim Web App

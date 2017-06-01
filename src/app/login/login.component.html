@@ -1,0 +1,46 @@
+<clr-main-container>
+  <clr-header class="header-4">
+  <div class="branding">
+    <a class="nav-link">
+      <clr-icon shape="bank"></clr-icon>
+      <span class="title">Smart Claim</span>
+    </a>
+  </div>
+</clr-header>
+<div class="login-wrapper">
+    <form class="login">
+        <label class="title">
+            Smart Claim&#174;
+        </label>
+        <div class="login-group">
+            <div class="auth-source select">
+                <select name="fiscalYear" [(ngModel)]="fiscalYear">
+                    <option value="2016">ปีงบประมาณ 2559</option>
+                    <option value="2017">ปีงบประมาณ 2560</option>
+                    <option value="2018">ปีงบประมาณ 2561</option>
+                </select>
+            </div>
+            <div class="auth-source select">
+                <select name="userType" [(ngModel)]="userType">
+                    <option value="1">Claim Manager (เจ้าหน้าที่)</option>
+                    <option value="2">Manager (ผู้บริหาร)</option>
+                </select>
+            </div>
+            <input (keypress)="enterLogin($event)" class="username" [(ngModel)]="username" type="text" name="login_username" placeholder="Username">
+            <input (keypress)="enterLogin($event)" class="password" [(ngModel)]="password" type="password" name="login_password" placeholder="Password">
+            <div class="error active" *ngIf='isError'>
+                {{ errorMessage }}
+            </div>
+            <div style="text-align: center" *ngIf="isLogging">
+              <span class="spinner spinner-inline">
+                  Loading...
+              </span>
+              <span>
+                  Logging in...
+              </span>
+            </div>
+            <button type="button" (click)="doLogin()" class="btn btn-primary" [disabled]="!username || !password || !userType || isLogging">LOG IN</button>
+        </div>
+    </form>
+</div>
+</clr-main-container>

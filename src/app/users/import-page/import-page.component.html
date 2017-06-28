@@ -10,7 +10,7 @@
   <clr-dg-column>นำเข้าโดย</clr-dg-column>
   <clr-dg-placeholder>ไม่พบไฟล์ที่ต้องการนำเข้า</clr-dg-placeholder>
 
-  <clr-dg-row *ngFor="let log of logs">
+  <clr-dg-row *clrDgItems="let log of logs">
     <clr-dg-cell>{{log.uploaded_at | date}}</clr-dg-cell>
     <clr-dg-cell>{{log.filename}}</clr-dg-cell>
     <clr-dg-cell>{{log.filetype}}</clr-dg-cell>
@@ -18,8 +18,9 @@
   </clr-dg-row>
 
   <clr-dg-footer>
-    {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}} of {{pagination.totalItems}} รายการ
-    <clr-dg-pagination #pagination [clrDgPageSize]="10"></clr-dg-pagination>
+      {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+      จาก {{pagination.totalItems}} รายการ
+      <clr-dg-pagination #pagination [clrDgPageSize]="10"></clr-dg-pagination>
   </clr-dg-footer>
 </clr-datagrid>
 

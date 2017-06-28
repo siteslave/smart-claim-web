@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class ClaimService {
@@ -10,31 +11,19 @@ export class ClaimService {
     private authHttp: AuthHttp
   ) { }
 
-  getLogs() {
-    return new Promise((resolve, reject) => {
-      this.authHttp.get(`${this.url}/claim-manager/imports/logs`)
-        .map(res => res.json())
-        .subscribe(data => {
-          resolve(data);
-        }, error => {
-          reject(error);
-        });
-    });
+  async getLogs() {
+    const response = await this.authHttp.get(`${this.url}/claim-manager/imports/logs`).toPromise();
+    return response.json();
   }
 
-  getNotSendIPD(start: any, end: any) {
-    return new Promise((resolve, reject) => {
-      this.authHttp.post(`${this.url}/claim-manager/ipd/not-send`, {
-        start: start,
-        end: end
-      })
-        .map(res => res.json())
-        .subscribe(data => {
-          resolve(data);
-        }, error => {
-          reject(error);
-        });
-    });
+  async getNotSendUC(start: any, end: any, type) {
+    const response = await this.authHttp.post(`${this.url}/claim-manager/ucs/not-send`, {
+      start: start,
+      end: end,
+      type: type
+    }).toPromise();
+
+    return response.json();
   }
 
 }

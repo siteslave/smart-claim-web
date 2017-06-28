@@ -26,14 +26,14 @@
     "zone.js": "^0.8.4",
     "@webcomponents/custom-elements": "^1.0.0-alpha.3",
     "angular2-jwt": "^0.2.3",
-    "clarity-angular": "^0.9.6",
-    "clarity-icons": "^0.9.6",
-    "clarity-ui": "^0.9.6",
+    "clarity-angular": "^0.9.10",
+    "clarity-icons": "^0.9.10",
+    "clarity-ui": "^0.9.10",
     "classlist.js": "^1.1.20150312",
     "moment": "^2.18.1",
     "mutationobserver-shim": "^0.3.2",
     "mydatepicker-th": "0.1.1",
-    "sweetalert2": "^6.6.1",
+    "sweetalert2": "^6.6.5",
     "web-animations-js": "^2.2.5"
   },
   "devDependencies": {

@@ -1,3 +1,4 @@
+import { AlertService } from './../alert.service';
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
@@ -24,36 +25,33 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) { }
 
 
   doLogin() {
-    if (this.username && this.password && this.userType && this.fiscalYear) {
+    if (this.username && this.password && this.fiscalYear) {
       this.isError = false;
       this.isLogging = true;
-      this.loginService.doLogin(this.username, this.password, this.userType, this.fiscalYear)
+      this.loginService.doLogin(this.username, this.password, this.fiscalYear)
         .then((resp: any) => {
           this.isLogging = false;
           if (resp.ok) {
             const decodedToken = this.jwtHelper.decodeToken(resp.token);
             sessionStorage.setItem('token', resp.token);
             sessionStorage.setItem('fullname', decodedToken.fullname);
-
-            if (this.userType === '2') {
-              this.router.navigate(['manager']);
-            } else {
-              this.router.navigate(['users']);
-            }
+            this.router.navigate(['users']);
           } else {
-            this.isError = true;
-            this.errorMessage = resp.message;
+            this.alertService.error(JSON.stringify(resp.message));
           }
         })
         .catch(err => {
-          console.log(err);
+          this.alertService.error(err.message);
           this.isLogging = false;
       })
+    } else {
+      this.alertService.error('กรุณาระบุข้อมูลให้ครบถ้วน');
     }
   }
 
@@ -62,7 +60,7 @@ export class LoginComponent implements OnInit {
       this.doLogin();
     }
   }
-  
+
   ngOnInit() {
   }
 

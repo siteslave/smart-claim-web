@@ -43,22 +43,21 @@ export class ImportPageComponent implements OnInit {
     this.getLogs();
   }
 
-  getLogs() {
+  async getLogs() {
     this.loading = true;
-    this.claimService.getLogs()
-      .then((result: any) => {
-        this.loading = false;
-        if (result.ok) {
-          this.logs = result.rows;
-        } else {
-          const error = result.error || 'เกิดข้อผิดพลาดไม่สามารถดำเนินการได้';
-          this.alertService.error(JSON.stringify(error));
-        }
-      })
-      .catch(() => {
-        this.loading = false;
-        this.alertService.serverError();
-      });
+    try {
+      const result = await this.claimService.getLogs();
+      this.loading = false;
+      if (result.ok) {
+        this.logs = result.rows;
+      } else {
+        const error = result.error || 'เกิดข้อผิดพลาดไม่สามารถดำเนินการได้';
+        this.alertService.error(JSON.stringify(error));
+      }
+    } catch (error) {
+      this.loading = false;
+      this.alertService.error(error.message);
+    }
   };
 
   fileChangeEvent(fileInput: any) {

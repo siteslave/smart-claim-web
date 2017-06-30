@@ -34,7 +34,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppRoutingModule,
     ManagerModule,
     UsersModule,
-    LoginModule,
+    LoginModule
   ],
   providers: [
     AuthGuard,

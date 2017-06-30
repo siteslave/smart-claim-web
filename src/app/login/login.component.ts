@@ -43,11 +43,11 @@ export class LoginComponent implements OnInit {
             sessionStorage.setItem('fullname', decodedToken.fullname);
             this.router.navigate(['users']);
           } else {
-            this.alertService.error(JSON.stringify(resp.message));
+            this.alertService.error(JSON.stringify(resp.error));
           }
         })
         .catch(err => {
-          this.alertService.error(err.message);
+          this.alertService.serverError();
           this.isLogging = false;
       })
     } else {

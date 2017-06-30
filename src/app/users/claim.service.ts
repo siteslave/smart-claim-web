@@ -16,11 +16,12 @@ export class ClaimService {
     return response.json();
   }
 
-  async getNotSendUC(start: any, end: any, type) {
-    const response = await this.authHttp.post(`${this.url}/claim-manager/ucs/not-send`, {
+  async getNotSend(start: any, end: any, type, right) {
+    const response = await this.authHttp.post(`${this.url}/claim-manager/not-send`, {
       start: start,
       end: end,
-      type: type
+      type: type,
+      right: right
     }).toPromise();
 
     return response.json();

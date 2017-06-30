@@ -1,3 +1,4 @@
+import { NvD3Component } from 'ng2-nvd3';
 import { UploadingService } from './../uploading.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -37,7 +38,8 @@ import { SendStatusPageComponent } from './send-status-page/send-status-page.com
     DashboardComponent,
     IpdPageComponent,
     OpdPageComponent,
-    SendStatusPageComponent
+    SendStatusPageComponent,
+    NvD3Component
   ],
   providers: [
     UserService,

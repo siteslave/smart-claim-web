@@ -16,59 +16,51 @@ export class SendStatusPageComponent implements OnInit {
     showClearDateBtn: false
   };
 
-  ucStart: any;
-  ucEnd: any;
-  ucServiceType: any;
-  isUCOpd = false; // ipd = false, opd = true
+  startDate: any;
+  endDate: any;
+  serviceType: any;
+  rightType: any;
 
-  totalPriceLateIpd = 0;
-  totalPriceLateOpd = 0;
-  opdStartDate: any;
-  opdEndDate: any;
+  isOpd = false; // ipd = false, opd = true
+  totalPrice = 0;
   notSendLists: any = [];
-  notSendListsOpd: any = [];
-  loadingUc = false;
+
+  loading = false;
 
   constructor(
     private claimService: ClaimService,
     private alertService: AlertService
   ) {
-    this.ucStart = { date: { year: moment().get('year'), month: moment().get('month') + 1, day: moment().get('date') } };
-    this.ucEnd = { date: { year: moment().get('year'), month: moment().get('month') + 1, day: moment().get('date') } };
-    this.opdStartDate = { date: { year: moment().get('year'), month: moment().get('month') + 1, day: moment().get('date') } };
-    this.opdEndDate = { date: { year: moment().get('year'), month: moment().get('month') + 1, day: moment().get('date') } };
+    this.startDate = { date: { year: moment().get('year'), month: moment().get('month') + 1, day: moment().get('date') } };
+    this.endDate = { date: { year: moment().get('year'), month: moment().get('month') + 1, day: moment().get('date') } };
   }
 
   ngOnInit() { }
 
-  async showNotSendUC() {
-    const start = `${this.ucStart.date.year}-${this.ucStart.date.month}-${this.ucStart.date.day}`;
-    const end = `${this.ucEnd.date.year}-${this.ucEnd.date.month}-${this.ucEnd.date.day}`;
-    this.totalPriceLateIpd = 0;
-    this.isUCOpd = this.ucServiceType === 'OP';
+  async showNotSend() {
+    const start = `${this.startDate.date.year}-${this.startDate.date.month}-${this.startDate.date.day}`;
+    const end = `${this.endDate.date.year}-${this.endDate.date.month}-${this.endDate.date.day}`;
+    this.totalPrice = 0;
+    this.isOpd = this.serviceType === 'OP';
     try {
-      this.loadingUc = true;
+      this.loading = true;
       this.notSendLists = [];
-      const response = await this.claimService.getNotSendUC(start, end, this.ucServiceType);
+      const response = await this.claimService.getNotSend(start, end, this.serviceType, this.rightType);
       if (response.ok) {
-        this.loadingUc = false;
+        this.loading = false;
         this.notSendLists = response.rows;
         response.rows.forEach(v => {
-          this.totalPriceLateIpd += parseFloat(v.total_price);
+          this.totalPrice += parseFloat(v.total_price);
         });
       } else {
-        this.loadingUc = false;
+        this.loading = false;
         console.log(response.error);
         this.alertService.error();
       }
     } catch (error) {
-      this.loadingUc = false;
+      this.loading = false;
       this.alertService.error(error.message);
     }
-
-  }
-
-  showNotSendOPDList() {
 
   }
 }

@@ -1,4 +1,3 @@
-import { NvD3Component } from 'ng2-nvd3';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

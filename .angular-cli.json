@@ -22,15 +22,12 @@
         "../node_modules/clarity-icons/clarity-icons.min.css",
         "../node_modules/clarity-ui/clarity-ui.min.css",
         "../node_modules/sweetalert2/dist/sweetalert2.min.css",
-        "../node_modules/nvd3/build/nv.d3.min.css",
         "styles.css"
       ],
       "scripts": [
         "../node_modules/mutationobserver-shim/dist/mutationobserver.min.js",
         "../node_modules/@webcomponents/custom-elements/custom-elements.min.js",
-        "../node_modules/clarity-icons/clarity-icons.min.js",
-        "../node_modules/d3/d3.min.js",
-        "../node_modules/nvd3/build/nv.d3.min.js"
+        "../node_modules/clarity-icons/clarity-icons.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

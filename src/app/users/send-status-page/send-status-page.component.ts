@@ -1,3 +1,4 @@
+import { ExcelService } from './../../excel.service';
 import { Component, OnInit } from '@angular/core';
 import { IMyOptions, IMyDayLabels } from 'mydatepicker-th';
 import { ClaimService } from '../claim.service';
@@ -29,7 +30,8 @@ export class SendStatusPageComponent implements OnInit {
 
   constructor(
     private claimService: ClaimService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private excelService: ExcelService
   ) {
     this.startDate = { date: { year: moment().get('year'), month: moment().get('month') + 1, day: moment().get('date') } };
     this.endDate = { date: { year: moment().get('year'), month: moment().get('month') + 1, day: moment().get('date') } };
@@ -62,5 +64,9 @@ export class SendStatusPageComponent implements OnInit {
       this.alertService.error(error.message);
     }
 
+  }
+
+  exportExcel() {
+    this.excelService.exportAsExcelFile(this.notSendLists, 'not-send-list');
   }
 }

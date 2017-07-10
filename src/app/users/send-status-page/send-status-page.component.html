@@ -3,110 +3,120 @@
   <span class="breadcrumb-item active">รายการค้างส่ง</span>
 </nav>
 
+<div class="card">
+  <div class="card-header">
+    รายการค้างส่งเบิก
+  </div>
+  <div class="card-block">
+    <div class="card-text">
 
-<div class="row">
-  <div class="col-md-3" [style.padding-top.px]="6">
-    <div class="form-group">
-      <label for="">ตั้งแต่</label>
-      <my-date-picker-th name="mydate" [options]="myDatePickerOptions" [(ngModel)]="startDate" required>
-      </my-date-picker-th>
-    </div>
-  </div>
-  <div class="col-md-3" [style.padding-top.px]="6">
-    <div class="form-group">
-      <label for="">ถึง</label>
-      <my-date-picker-th name="mydate" [options]="myDatePickerOptions" [(ngModel)]="endDate" required>
-      </my-date-picker-th>
-    </div>
-  </div>
-  <div class="col-md-3" style="float: right; padding-top: 15px;">
-    <div class="form-group">
-      <label for="">สิทธิ์การรักษา</label>
-      <div class="select">
-        <select name="rightType" [(ngModel)]="rightType">
-        <option><สิทธิ์การรักษา></option>
-        <option value="UCS">สิทธิหลักประกันสุขภาพถ้วนหน้า (UCS,WEL)</option>
-        <option value="OFC">สิทธิข้าราชการ (OFC) และ องค์กรปกครองส่วนท้องถิ่น (LGO)</option>
-        <option value="SSS">สิทธิประกันสังคม (SSS)</option>
-      </select>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-2" style="float: right; padding-top: 15px;">
-    <div class="form-group">
-      <label for="">ประเภทผู้ป่วย</label>
-      <div class="select">
-        <select name="serviceType" [(ngModel)]="serviceType">
+      <div class="row">
+        <div class="col-md-3" [style.padding-top.px]="6">
+          <div class="form-group">
+            <label for="">ตั้งแต่</label>
+            <my-date-picker-th name="mydate" [options]="myDatePickerOptions" [(ngModel)]="startDate" required>
+            </my-date-picker-th>
+          </div>
+        </div>
+        <div class="col-md-3" [style.padding-top.px]="6">
+          <div class="form-group">
+            <label for="">ถึง</label>
+            <my-date-picker-th name="mydate" [options]="myDatePickerOptions" [(ngModel)]="endDate" required>
+            </my-date-picker-th>
+          </div>
+        </div>
+        <div class="col-md-3" style="float: right; padding-top: 15px;">
+          <div class="form-group">
+            <label for="">สิทธิ์การรักษา</label>
+            <div class="select">
+              <select name="rightType" [(ngModel)]="rightType">
+                <option><สิทธิ์การรักษา></option>
+                <option value="UCS">สิทธิหลักประกันสุขภาพถ้วนหน้า (UCS,WEL)</option>
+                <option value="OFC">สิทธิข้าราชการ (OFC) และ องค์กรปกครองส่วนท้องถิ่น (LGO)</option>
+                <option value="SSS">สิทธิประกันสังคม (SSS)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2" style="float: right; padding-top: 15px;">
+          <div class="form-group">
+            <label for="">ประเภทผู้ป่วย</label>
+            <div class="select">
+              <select name="serviceType" [(ngModel)]="serviceType">
             <option><เลือกประเภทผู้ป่วย></option>
             <option value="IP">ผู้ป่วยใน (IP)</option>
             <option value="OP">ผู้ป่วยนอก (OP)</option>
           </select>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-1">
-    <div style="padding-top: 20px;"></div>
-    <button class="btn btn-success" (click)="showNotSend()" 
-    [disabled]="!startDate || !endDate || !serviceType || !rightType || loading">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <div style="padding-top: 20px;"></div>
+          <button class="btn btn-success" (click)="showNotSend()" [disabled]="!startDate || !endDate || !serviceType || !rightType || loading">
       แสดง
     </button>
+        </div>
+      </div>
+
+      <clr-datagrid [style.height.px]="400" [clrDgLoading]="loading" *ngIf="!isOpd">
+        <clr-dg-column [clrDgField]="'dchdate'" [style.width.%]="20">วันที่จำหน่าย</clr-dg-column>
+        <clr-dg-column [clrDgField]="'an'" [style.width.%]="15">AN</clr-dg-column>
+        <clr-dg-column [clrDgField]="'hn'" [style.width.%]="15">HN</clr-dg-column>
+        <clr-dg-column [clrDgField]="'ptname'" [style.width.%]="30">ชื่อ-สกุล</clr-dg-column>
+        <clr-dg-column [clrDgField]="'total_price'" [style.width.%]="10">ค่าใช้จ่าย</clr-dg-column>
+        <clr-dg-column [clrDgField]="'total_late'" [style.width.%]="10">ล่าช้า (วัน)</clr-dg-column>
+        <clr-dg-placeholder>ไม่พบรายการ, กรุณาระบุเงื่อนไข!</clr-dg-placeholder>
+        <clr-dg-row *clrDgItems="let s of notSendLists">
+          <clr-dg-cell>{{s.dchdate }} {{s.dchtime}}</clr-dg-cell>
+          <clr-dg-cell>{{s.an}}</clr-dg-cell>
+          <clr-dg-cell>{{s.hn}}</clr-dg-cell>
+          <clr-dg-cell>{{s.ptname }}</clr-dg-cell>
+          <clr-dg-cell>{{s.total_price | number: '1.2' }}</clr-dg-cell>
+          <clr-dg-cell>
+            <span class="label label-danger" *ngIf="s.total_late > 15">{{s.total_late | number }}</span>
+            <span class="label label-warning" *ngIf="s.total_late == 15">{{s.total_late | number }}</span>
+            <span class="label label-success" *ngIf="s.total_late < 15">{{s.total_late | number }}</span>
+          </clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>
+          ทั้งหมด <span class="label label-danger">{{ notSendLists.length | number}}</span> รายการ, ค่าใช้จ่ายรวม <span class="label label-success">{{ totalPrice | number: '1.2' }}</span>          บาท &nbsp;&nbsp;&nbsp; {{pagination1.firstItem + 1}} - {{pagination1.lastItem + 1}} of {{pagination1.totalItems}}
+          รายการ
+          <clr-dg-pagination #pagination1 [clrDgPageSize]="50"></clr-dg-pagination>
+        </clr-dg-footer>
+      </clr-datagrid>
+
+      <clr-datagrid [style.height.px]="400" [clrDgLoading]="loading" *ngIf="isOpd">
+        <clr-dg-column [clrDgField]="'date_serv'" [style.width.%]="20">วันที่รับบริการ</clr-dg-column>
+        <clr-dg-column [clrDgField]="'an'" [style.width.%]="15">SEQ</clr-dg-column>
+        <clr-dg-column [clrDgField]="'hn'" [style.width.%]="15">HN</clr-dg-column>
+        <clr-dg-column [clrDgField]="'ptname'" [style.width.%]="30">ชื่อ-สกุล</clr-dg-column>
+        <clr-dg-column [clrDgField]="'total_price'" [style.width.%]="10">ค่าใช้จ่าย</clr-dg-column>
+        <clr-dg-column [clrDgField]="'total_late'" [style.width.%]="10">ล่าช้า (วัน)</clr-dg-column>
+        <clr-dg-placeholder>ไม่พบรายการ, กรุณาระบุเงื่อนไข!</clr-dg-placeholder>
+        <clr-dg-row *clrDgItems="let s of notSendLists">
+          <clr-dg-cell>{{s.date_serv }} {{s.time_serve}}</clr-dg-cell>
+          <clr-dg-cell>{{s.seq}}</clr-dg-cell>
+          <clr-dg-cell>{{s.hn}}</clr-dg-cell>
+          <clr-dg-cell>{{s.ptname }}</clr-dg-cell>
+          <clr-dg-cell>{{s.total_price | number: '1.2' }}</clr-dg-cell>
+          <clr-dg-cell>
+            <span class="label label-danger" *ngIf="s.total_late > 15">{{s.total_late | number }}</span>
+            <span class="label label-warning" *ngIf="s.total_late == 15">{{s.total_late | number }}</span>
+            <span class="label label-success" *ngIf="s.total_late < 15">{{s.total_late | number }}</span>
+          </clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer>
+          ทั้งหมด <span class="label label-danger">{{ notSendLists.length | number}}</span> รายการ, ค่าใช้จ่ายรวม <span class="label label-success">{{ totalPrice | number: '1.2' }}</span>          บาท &nbsp;&nbsp;&nbsp; {{pagination2.firstItem + 1}} - {{pagination2.lastItem + 1}} of {{pagination2.totalItems}}
+          รายการ
+          <clr-dg-pagination #pagination2 [clrDgPageSize]="50"></clr-dg-pagination>
+        </clr-dg-footer>
+      </clr-datagrid>
+
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-sm btn-success" (click)="exportExcel()" [disabled]="notSendLists.length === 0">ส่งออก Excel</button>
   </div>
 </div>
-
-<clr-datagrid [style.height.px]="450" [clrDgLoading]="loading" *ngIf="!isOpd">
-  <clr-dg-column [clrDgField]="'dchdate'" [style.width.%]="20">วันที่จำหน่าย</clr-dg-column>
-  <clr-dg-column [clrDgField]="'an'" [style.width.%]="15">AN</clr-dg-column>
-  <clr-dg-column [clrDgField]="'hn'" [style.width.%]="15">HN</clr-dg-column>
-  <clr-dg-column [clrDgField]="'ptname'" [style.width.%]="30">ชื่อ-สกุล</clr-dg-column>
-  <clr-dg-column [clrDgField]="'total_price'" [style.width.%]="10">ค่าใช้จ่าย</clr-dg-column>
-  <clr-dg-column [clrDgField]="'total_late'" [style.width.%]="10">ล่าช้า (วัน)</clr-dg-column>
-  <clr-dg-placeholder>ไม่พบรายการ, กรุณาระบุเงื่อนไข!</clr-dg-placeholder>
-  <clr-dg-row *clrDgItems="let s of notSendLists">
-    <clr-dg-cell>{{s.dchdate }} {{s.dchtime}}</clr-dg-cell>
-    <clr-dg-cell>{{s.an}}</clr-dg-cell>
-    <clr-dg-cell>{{s.hn}}</clr-dg-cell>
-    <clr-dg-cell>{{s.ptname }}</clr-dg-cell>
-    <clr-dg-cell>{{s.total_price | number: '1.2' }}</clr-dg-cell>
-    <clr-dg-cell>
-      <span class="label label-danger" *ngIf="s.total_late > 15">{{s.total_late | number }}</span>
-      <span class="label label-warning" *ngIf="s.total_late == 15">{{s.total_late | number }}</span>
-      <span class="label label-success" *ngIf="s.total_late < 15">{{s.total_late | number }}</span>
-    </clr-dg-cell>
-  </clr-dg-row>
-
-  <clr-dg-footer>
-    ทั้งหมด <span class="label label-danger">{{ notSendLists.length | number}}</span> รายการ,
-     ค่าใช้จ่ายรวม <span class="label label-success">{{ totalPrice | number: '1.2' }}</span>    บาท 
-     &nbsp;&nbsp;&nbsp; {{pagination1.firstItem + 1}} - {{pagination1.lastItem + 1}} of {{pagination1.totalItems}} รายการ
-    <clr-dg-pagination #pagination1 [clrDgPageSize]="50"></clr-dg-pagination>
-  </clr-dg-footer>
-</clr-datagrid>
-
-<clr-datagrid [style.height.px]="450" [clrDgLoading]="loading" *ngIf="isOpd">
-  <clr-dg-column [clrDgField]="'date_serv'" [style.width.%]="20">วันที่รับบริการ</clr-dg-column>
-  <clr-dg-column [clrDgField]="'an'" [style.width.%]="15">SEQ</clr-dg-column>
-  <clr-dg-column [clrDgField]="'hn'" [style.width.%]="15">HN</clr-dg-column>
-  <clr-dg-column [clrDgField]="'ptname'" [style.width.%]="30">ชื่อ-สกุล</clr-dg-column>
-  <clr-dg-column [clrDgField]="'total_price'" [style.width.%]="10">ค่าใช้จ่าย</clr-dg-column>
-  <clr-dg-column [clrDgField]="'total_late'" [style.width.%]="10">ล่าช้า (วัน)</clr-dg-column>
-  <clr-dg-placeholder>ไม่พบรายการ, กรุณาระบุเงื่อนไข!</clr-dg-placeholder>
-  <clr-dg-row *clrDgItems="let s of notSendLists">
-    <clr-dg-cell>{{s.date_serv }} {{s.time_serve}}</clr-dg-cell>
-    <clr-dg-cell>{{s.seq}}</clr-dg-cell>
-    <clr-dg-cell>{{s.hn}}</clr-dg-cell>
-    <clr-dg-cell>{{s.ptname }}</clr-dg-cell>
-    <clr-dg-cell>{{s.total_price | number: '1.2' }}</clr-dg-cell>
-    <clr-dg-cell>
-      <span class="label label-danger" *ngIf="s.total_late > 15">{{s.total_late | number }}</span>
-      <span class="label label-warning" *ngIf="s.total_late == 15">{{s.total_late | number }}</span>
-      <span class="label label-success" *ngIf="s.total_late < 15">{{s.total_late | number }}</span>
-    </clr-dg-cell>
-  </clr-dg-row>
-
-  <clr-dg-footer>
-    ทั้งหมด <span class="label label-danger">{{ notSendLists.length | number}}</span> รายการ, 
-    ค่าใช้จ่ายรวม <span class="label label-success">{{ totalPrice | number: '1.2' }}</span>    บาท 
-    &nbsp;&nbsp;&nbsp; {{pagination2.firstItem + 1}} - {{pagination2.lastItem + 1}} of {{pagination2.totalItems}} รายการ
-    <clr-dg-pagination #pagination2 [clrDgPageSize]="50"></clr-dg-pagination>
-  </clr-dg-footer>
-</clr-datagrid>

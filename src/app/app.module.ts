@@ -18,6 +18,7 @@ import { UsersModule } from './users/users.module';
 import { AuthGuard } from './auth-guard.service';
 import { AlertService } from './alert.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ChartModule } from 'angular2-highcharts';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     PageNotFoundComponent
   ],
   imports: [
+    ChartModule,
     BrowserModule,
     FormsModule,
     HttpModule,

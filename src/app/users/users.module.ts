@@ -1,4 +1,8 @@
-import { NvD3Component } from 'ng2-nvd3';
+import { ExcelService } from './../excel.service';
+declare var require: any;
+
+import { ChartModule } from 'angular2-highcharts';
+import { DashboardService } from './dashboard.service';
 import { UploadingService } from './../uploading.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,9 +24,21 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { IpdPageComponent } from './ipd-page/ipd-page.component';
 import { OpdPageComponent } from './opd-page/opd-page.component';
 import { SendStatusPageComponent } from './send-status-page/send-status-page.component';
+import { HighchartsStatic } from "angular2-highcharts/dist/HighchartsService";
+
+export function highchartsFactory() {
+  return require('highcharts');
+}
+
+const Highcharts = require('highcharts');
+
+Highcharts.setOptions({
+  credits: false
+});
 
 @NgModule({
   imports: [
+    ChartModule,
     CommonModule,
     UsersRoutingModule,
     ClarityModule,
@@ -38,14 +54,16 @@ import { SendStatusPageComponent } from './send-status-page/send-status-page.com
     DashboardComponent,
     IpdPageComponent,
     OpdPageComponent,
-    SendStatusPageComponent,
-    NvD3Component
+    SendStatusPageComponent
   ],
   providers: [
     UserService,
     AuthGuard,
     ClaimService,
-    UploadingService
+    UploadingService,
+    DashboardService,
+    ExcelService,
+    { provide: HighchartsStatic, useFactory: highchartsFactory }
   ]
 })
 export class UsersModule { }

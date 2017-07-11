@@ -63,7 +63,7 @@ export class ImportPageComponent implements OnInit {
   fileChangeEvent(fileInput: any) {
     this.filesUploads = [];
     this.filesUploads = <Array<File>>fileInput.target.files;
-    console.log(this.filesUploads);
+    // console.log(this.filesUploads);
     this.fileName = this.filesUploads[0].name;
   }
 

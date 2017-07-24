@@ -965,7 +965,7 @@ export class DashboardComponent implements OnInit {
           }
           const idxIpdClaim = _.findIndex(result.ipd.claim, { date_serv: v });
           if (idxIpdClaim > -1) {
-            ipdClaimData.push(+result.ipd.claim[idxIpdClaim].total);
+            ipdClaimData.push(+result.ipd.total[idxIpdClaim].total);
           } else {
             ipdClaimData.push(0);
           }
@@ -1014,7 +1014,7 @@ export class DashboardComponent implements OnInit {
           }
           const idxOpdTotal = _.findIndex(result.opd.total, { date_serv: v });
           if (idxOpdTotal > -1) {
-            opdTotalData.push(+result.opd.claim[idxOpdTotal].total);
+            opdTotalData.push(+result.opd.total[idxOpdTotal].total);
           } else {
             opdTotalData.push(0);
           }

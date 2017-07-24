@@ -791,7 +791,7 @@ export class DashboardComponent implements OnInit {
         categories.forEach(v => {
           const idxIpdTotal = _.findIndex(result.ipd.total, { date_serv: v });
           if (idxIpdTotal > -1) {
-            ipdTotalData.push(+result.ipd.claim[idxIpdTotal].total);
+            ipdTotalData.push(+result.ipd.total[idxIpdTotal].total);
           } else {
             ipdTotalData.push(0);
           }
@@ -847,7 +847,7 @@ export class DashboardComponent implements OnInit {
           }
           const idxOpdTotal = _.findIndex(result.opd.total, { date_serv: v });
           if (idxOpdTotal > -1) {
-            opdTotalData.push(+result.opd.claim[idxOpdTotal].total);
+            opdTotalData.push(+result.opd.total[idxOpdTotal].total);
           } else {
             opdTotalData.push(0);
           }

@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'users', component: UsersComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'send-status', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },
       { path: 'opd', component: OpdPageComponent, pathMatch: 'full' },
       { path: 'ipd', component: IpdPageComponent, pathMatch: 'full' },

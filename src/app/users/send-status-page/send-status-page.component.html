@@ -62,7 +62,8 @@
         <clr-dg-column [clrDgField]="'dchdate'" [style.width.%]="20">วันที่จำหน่าย</clr-dg-column>
         <clr-dg-column [clrDgField]="'an'" [style.width.%]="15">AN</clr-dg-column>
         <clr-dg-column [clrDgField]="'hn'" [style.width.%]="15">HN</clr-dg-column>
-        <clr-dg-column [clrDgField]="'ptname'" [style.width.%]="30">ชื่อ-สกุล</clr-dg-column>
+        <clr-dg-column [clrDgField]="'ptname'" [style.width.%]="20">ชื่อ-สกุล</clr-dg-column>
+        <clr-dg-column [clrDgField]="'inscl'" [style.width.%]="10">สิทธิ์</clr-dg-column>
         <clr-dg-column [clrDgField]="'total_price'" [style.width.%]="10">ค่าใช้จ่าย</clr-dg-column>
         <clr-dg-column [clrDgField]="'total_late'" [style.width.%]="10">ล่าช้า (วัน)</clr-dg-column>
         <clr-dg-placeholder>ไม่พบรายการ, กรุณาระบุเงื่อนไข!</clr-dg-placeholder>
@@ -71,6 +72,7 @@
           <clr-dg-cell>{{s.an}}</clr-dg-cell>
           <clr-dg-cell>{{s.hn}}</clr-dg-cell>
           <clr-dg-cell>{{s.ptname }}</clr-dg-cell>
+          <clr-dg-cell>{{s.inscl }}</clr-dg-cell>
           <clr-dg-cell>{{s.total_price | number: '1.2' }}</clr-dg-cell>
           <clr-dg-cell>
             <span class="label label-danger" *ngIf="s.total_late > 15">{{s.total_late | number }}</span>
@@ -90,7 +92,8 @@
         <clr-dg-column [clrDgField]="'date_serv'" [style.width.%]="20">วันที่รับบริการ</clr-dg-column>
         <clr-dg-column [clrDgField]="'an'" [style.width.%]="15">SEQ</clr-dg-column>
         <clr-dg-column [clrDgField]="'hn'" [style.width.%]="15">HN</clr-dg-column>
-        <clr-dg-column [clrDgField]="'ptname'" [style.width.%]="30">ชื่อ-สกุล</clr-dg-column>
+        <clr-dg-column [clrDgField]="'ptname'" [style.width.%]="20">ชื่อ-สกุล</clr-dg-column>
+        <clr-dg-column [clrDgField]="'inscl'" [style.width.%]="10">ชื่อ-สกุล</clr-dg-column>
         <clr-dg-column [clrDgField]="'total_price'" [style.width.%]="10">ค่าใช้จ่าย</clr-dg-column>
         <clr-dg-column [clrDgField]="'total_late'" [style.width.%]="10">ล่าช้า (วัน)</clr-dg-column>
         <clr-dg-placeholder>ไม่พบรายการ, กรุณาระบุเงื่อนไข!</clr-dg-placeholder>
@@ -99,6 +102,7 @@
           <clr-dg-cell>{{s.seq}}</clr-dg-cell>
           <clr-dg-cell>{{s.hn}}</clr-dg-cell>
           <clr-dg-cell>{{s.ptname }}</clr-dg-cell>
+          <clr-dg-cell>{{s.inscl }}</clr-dg-cell>
           <clr-dg-cell>{{s.total_price | number: '1.2' }}</clr-dg-cell>
           <clr-dg-cell>
             <span class="label label-danger" *ngIf="s.total_late > 15">{{s.total_late | number }}</span>
